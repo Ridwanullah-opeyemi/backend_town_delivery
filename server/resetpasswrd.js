@@ -3,14 +3,11 @@ import transporter from "./transproter.js"
 const FRONTEND_BASE_URL = process.env.FRONTEND_BASE_URL;
 
 const sendResetMail = async (token, name, email) => {
-    // 1. Define the full password reset URL using the token.
-    // This assumes your frontend has a route like /reset-password/:token
     const resetUrl = `${FRONTEND_BASE_URL}/reset-password/${token}`;
 
     const mailOption = {
         from: '"Orange Delivery 🍊" <no-reply@orange.com>',
         to: email,
-        // CRITICAL CHANGE: Subject line for password reset 
         subject: 'Orange Delivery: Password Reset Request',
         html: `
             <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
