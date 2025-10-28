@@ -23,11 +23,7 @@ const sendResetMail = async (token, name, email) => {
                         Reset My Password
                     </a>
                 </p>
-                <p style="margin: 25px 0;">
-                    <a href="${FRONTEND_BASE_URL}" style="background-color: #FF9900; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                        Reset My Password
-                    </a>
-                </p>
+                
 
                 <p>This link will expire in **60 minutes** for security reasons.</p>
                 <p>If you did not request a password reset, please ignore this email. Your current password will remain unchanged.</p>
