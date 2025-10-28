@@ -10,13 +10,11 @@ const foodSchema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number, // Improved: Use Number for price for mathematical operations
+        type: Number,
         required: true
     },
-    image: {
-        type: String, // Corrected: lowercase 'type'. This stores the image filename/path.
-        required: true
-    },
+    image: { type: String, required: true }, 
+    cloudinary_id: { type: String },
     category: {
         type: String, // Corrected: lowercase 'type'
         required: true
