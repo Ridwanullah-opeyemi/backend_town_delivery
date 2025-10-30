@@ -1,24 +1,24 @@
+
 import express from 'express';
 import multer from 'multer';
-import { CloudinaryStorage } from "multer-storage-cloudinary";
-import cloudinary from "../config/cloudinary.js"; 
-
 import { addFood, listFood, removeFood } from '../controllers/foodController.js'; 
 
 const foodrouter = express.Router();
 
-const newStorage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: "star_images", 
-        allowedFormats: ["jpeg", "png", "jpg"],
-        transformation: [{ width: 500, height: 500, crop: "limit" }],
+// --- Image Storage Engine ---
+
+const storage = multer.diskStorage({
+    destination: "uploads", 
+    filename: (req, file, cb) => {
+        return cb(null, `${Date.now()}${file.originalname}`); 
     }
 });
- 
-const uploads = multer({ storage: newStorage });
 
-foodrouter.post("/add", uploads.single("image"), addFood); 
+// --- Multer Instance ---
+const uploads = multer({ storage: storage });
+
+// --- API Endpoint ---
+foodrouter.post("/add", uploads.single("image"), addFood);
 foodrouter.get("/list", listFood)
 foodrouter.post("/remove", removeFood)
  

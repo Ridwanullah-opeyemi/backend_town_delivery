@@ -9,4 +9,3 @@ cartRouter.post("/remove",authMiddlewere, removeFromCart)
 cartRouter.post("/get",authMiddlewere, getCart)
 
 export default cartRouter
-

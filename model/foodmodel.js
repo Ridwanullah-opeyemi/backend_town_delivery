@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const foodSchema = new mongoose.Schema({
@@ -10,19 +11,19 @@ const foodSchema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: Number, // Improved: Use Number for price for mathematical operations
         required: true
     },
-    image: { type: String, required: true }, 
-    cloudinary_id: { type: String },
+    image: {
+        type: String, 
+        required: true
+    },
     category: {
-        type: String, // Corrected: lowercase 'type'
+        type: String, 
         required: true
     }
 });
 
-// This standard line ensures that the model is only compiled once,
-// preventing the 'OverwriteModelError' in development/hot-reloading environments.
 const foodModel = mongoose.models.food || mongoose.model("food", foodSchema);
 
 export default foodModel;

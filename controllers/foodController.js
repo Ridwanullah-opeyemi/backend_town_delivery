@@ -1,5 +1,6 @@
+
 import foodModel from "../model/foodmodel.js";
-import cloudinary from "../config/cloudinary.js"
+import fs from "fs"
 
 
 // add food item
@@ -12,13 +13,10 @@ const addFood = async (req,res) => {
             });
         }
 
-        const imageUrl = req.file.path; 
-        const imageId = req.file.filename; 
-
+        const image_filename = `${req.file.filename}`
         const food = await foodModel.create({
             ...req.body,
-            image: imageUrl,
-            cloudinary_id: imageId 
+            image: image_filename
         });
 
         res.status(200).json({
@@ -34,6 +32,8 @@ const addFood = async (req,res) => {
             message: "Error uploading items",
         })
     }
+
+
 }
 
 
@@ -65,17 +65,12 @@ const removeFood = async (req, res) => {
                 message: "Food item not found"
             });
         }
-        
-        if (food.cloudinary_id) {
-            await cloudinary.uploader.destroy(food.cloudinary_id, (err, result) => {
-                if (err) {
-                    console.error("Error deleting image from Cloudinary:", err);
-                } else {
-                    console.log("Image deleted from Cloudinary:", result);
-                }
-            });
-        }
-        
+
+        fs.unlink(`uploads/${food.image}`, (err)=>{
+            if (err) {
+                console.error("Error deleting image file:", err);
+            }
+        }); 
 
         await foodModel.findByIdAndDelete(req.body.id);
 
